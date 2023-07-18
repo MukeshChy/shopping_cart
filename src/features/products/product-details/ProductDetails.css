@@ -1,0 +1,12 @@
+.carousel {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-top: 0.5rem;
+    border: 1px solid #ededed;
+}
+
+.carousel-item {
+    border: 1px solid #e9e1e1;
+    cursor: pointer;
+}
