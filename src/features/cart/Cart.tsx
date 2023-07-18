@@ -53,7 +53,7 @@ const Cart = (): any => {
                 <Grid
                     item
                     xs={8}>
-                    <MyTable cartItems={cartItems} onQTYChange={updateQTY} actionPerformed={onActionPerformed} />
+                    <MyTable cartItems={cartItems} onQTYChange={updateQTY} enableEdit={true} enableDelete={true} actionPerformed={onActionPerformed} />
                 </Grid>
                 <Grid
                     item
