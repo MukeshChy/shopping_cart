@@ -12,7 +12,8 @@ function App() {
   const router = createBrowserRouter([
     { path: '', element: <Products /> },
     { path: '/products/:productId', element: <ProductDetails /> },
-    { path: '/cart', element: <Cart /> }
+    { path: '/cart', element: <Cart /> },
+    { path: '/checkout', element: <Cart /> }
   ]);
 
   return (

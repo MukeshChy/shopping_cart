@@ -9,6 +9,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Avatar from '@mui/material/Avatar';
 
 const MyTable = (props: any) => {
 
@@ -44,28 +45,40 @@ const MyTable = (props: any) => {
                             key={cartItem.product.id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell component="th" scope="row">
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        flexDirection: 'column'
+                                <div style={{
+                                        display: 'flex'
                                     }}>
-                                    <h2>{cartItem.product.title}</h2>
+                                    <Avatar
+                                        src={cartItem.product.thumbnail}
+                                        variant="square"
+                                        sx={{ width: 120, height: 120 }} />
                                     <div
                                         style={{
                                             display: 'flex',
-                                    }}>
-                                        {props.enableEdit && <Button variant="outlined" startIcon={<EditIcon />} onClick={(() => actionsHandler(cartItem, 'edit'))}>Edit</Button>}
-                                        {props.enableDelete && <Button variant="outlined" endIcon={<DeleteIcon />} color='error' style={{marginLeft: '1rem'}} onClick={(() => actionsHandler(cartItem, 'delete'))}>Delete</Button>}
+                                            flexDirection: 'column',
+                                            justifyContent: 'space-between',
+                                            marginLeft: '1rem'
+                                        }}>
+                                        <h2 style={{marginTop: 0}}>{cartItem.product.title}</h2>
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                        }}>
+                                            {props.enableEdit && <Button variant="outlined" startIcon={<EditIcon />} onClick={(() => actionsHandler(cartItem, 'edit'))}>Edit</Button>}
+                                            {props.enableDelete && <Button variant="outlined" endIcon={<DeleteIcon />} color='error' style={{marginLeft: '1rem'}} onClick={(() => actionsHandler(cartItem, 'delete'))}>Delete</Button>}
+                                        </div>
                                     </div>
                                 </div>
                             </TableCell>
                             <TableCell align="right">{cartItem.product.description}</TableCell>
                             <TableCell align="center">${cartItem.product.price}</TableCell>
                             <TableCell align="center">
-                                <TextField
+                                {!props.disableInput && <TextField
                                     value={cartItem.qty}
                                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                    qtyChangeHandler(event, cartItem) }} /> 
+                                    qtyChangeHandler(event, cartItem) }}
+                                    style={{width: 60}}/> }
+                                    {props.disableInput && <span>{cartItem.qty}</span>}
                             </TableCell>
                             <TableCell align="right">${cartItem.qty*cartItem.product.price}</TableCell>
                         </TableRow>

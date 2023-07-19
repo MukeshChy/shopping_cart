@@ -1,0 +1,10 @@
+.cart__right-section {
+    padding: 1rem;
+    margin-left: auto !important;
+    display: flex;
+    flex-direction: column !important;
+}
+
+.bg-light {
+    background-color: aliceblue;
+}
