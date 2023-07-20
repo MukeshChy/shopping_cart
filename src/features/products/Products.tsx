@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useMemo} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useNavigate } from "react-router-dom";
@@ -20,17 +20,20 @@ import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Product } from '../../shared/interfaces/Product';
 import { Pagination } from '@mui/material';
+import { updateWishlist } from '../../shared/store/wishlistSlice';
 
 const Products = (): any => {
 
     const products = useSelector((state: any) => state.products.products);
     const total = useSelector((state: any) => state.products.total);
     const categories = useSelector((state: any) => state.products.categories);
-    const searchKey = useSelector((state: any) => state.products.searchKey)
+    const searchKey = useSelector((state: any) => state.products.searchKey);
+    const wishlist = useSelector((state: any) => state.wishlist.products);
 
     const [pageNo, setPageNumber] = useState(1);
     const [totalPageNo, setTotalPageNo] = useState(8);
     const [selectedCategory, setSelectedCategory] = useState('');
+    const [wishListHash, setWishListHash] = useState({});
     
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -68,8 +71,19 @@ const Products = (): any => {
 
     useEffect(() => {
         setSelectedCategory('');
-    }, [searchKey])
+    }, [searchKey]);
 
+    useMemo(
+        () => {
+            let hash: any = {};
+            products.forEach((product: Product) => {
+                hash[product.id] = wishlist.findIndex((item: any) => item.productId === product.id) !== -1 ? 'orange' : 'gray';
+            });
+            setWishListHash(hash);
+        },
+        [wishlist, products]
+    )
+    
     const navigateToProductDetails = (product: Product) => {
         navigate(`/products/${product.id}`);
     }
@@ -85,6 +99,13 @@ const Products = (): any => {
     const onLoadCategory = () => {
         if(!categories.length) 
             dispatch(fetchCategories());
+    }
+
+    const updateWishListHandler = (event: any, product: Product) => {
+        dispatch(updateWishlist({
+            productId: product.id,
+            product: product
+        }));
     }
 
     return  <>
@@ -133,26 +154,34 @@ const Products = (): any => {
                                 item
                                 marginTop={4}
                                 key={product.id}
-                                onClick={() => navigateToProductDetails(product)}>
+                                >
                                 <Card sx={{ minWidth: 345, maxWidth: 345 }}>
                                 <CardHeader
                                     title={product.title}
                                     subheader={product.brand}
+                                    onClick={() => navigateToProductDetails(product)}
                                 />
                                 <CardMedia
                                     component="img"
                                     height="194"
                                     image={product.thumbnail}
                                     alt={product.title}
+                                    onClick={() => navigateToProductDetails(product)}
                                 />
-                                <CardContent>
+                                <CardContent onClick={() => navigateToProductDetails(product)}>
                                     <Typography variant="body2" color="text.secondary" style={{wordBreak: 'break-all'}}>
                                         {product.description}
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <IconButton>
-                                        <FavoriteIcon />
+                                    <IconButton onClick={(event: React.ChangeEvent<any>) => {
+                                        updateWishListHandler(event, product);
+                                    }}>
+                                        <FavoriteIcon style={
+                                            {
+                                                color: (wishListHash as any)[product.id]
+                                            }
+                                        } />
                                     </IconButton>
                                 </CardActions>
                                 </Card>

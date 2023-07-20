@@ -5,6 +5,8 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Badge from '@mui/material/Badge';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
+import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
+import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -15,13 +17,19 @@ import { updateSearchKey } from '../../shared/store/productSlice';
 const Header = (props: any) => {
 
     const cartItems = useSelector((state: any) => state.cartItems.cartItems);
+    const wishlistItems = useSelector((state: any) => state.wishlist.products);
 
-    const [count, setCount] = useState(null);
+    const [cartItemsCount, setCartItemsCount] = useState(null);
+    const [wishlistItemsCount, setWishlistCount] = useState(null);
     const [searchKey, setSearchKey] = useState('');
 
     useEffect(() => {
-        setCount(cartItems.length);
-    }, [cartItems])
+        setCartItemsCount(cartItems.length);
+    }, [cartItems]);
+
+    useEffect(() => {
+        setWishlistCount(wishlistItems.length);
+    }, [wishlistItems]);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -69,7 +77,12 @@ const Header = (props: any) => {
             </Box>
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                 <IconButton color="inherit" onClick={(() => navigate('/cart'))}>
-                    <Badge badgeContent={count} color="error">
+                    <Badge badgeContent={wishlistItemsCount} color="error">
+                        <FavoriteRoundedIcon />
+                    </Badge>
+                </IconButton>
+                <IconButton style={{ marginLeft: '1rem' }} color="inherit" onClick={(() => navigate('/cart'))}>
+                    <Badge badgeContent={cartItemsCount} color="error">
                         <ShoppingCartRoundedIcon />
                     </Badge>
                 </IconButton>

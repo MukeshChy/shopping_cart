@@ -11,7 +11,7 @@ export const fetchProducts  = (): any =>
             if (searchKey && searchKey.length) {
                 url = `${url}/search?q=${searchKey}`
             } else {
-                url = `${url}?limit=12&skip=${12*pageNo}`
+                url = `${url}?limit=12&skip=${12*(pageNo - 1)}`
             }
             
             axios.get(url)
