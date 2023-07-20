@@ -6,13 +6,17 @@ export interface ProductState {
     pageNo: number,
     pageSize: number,
     total?: number,
-    selectedProduct?: Product; 
+    selectedProduct?: Product,
+    categories?: string[],
+    selectedCategory?: string,
+    searchKey?: string | null;
 }
 
 const initialState: ProductState = {
     products: [],
     pageNo: 1,
-    pageSize: 12
+    pageSize: 12,
+    categories: []
 };
 
 const productsSlice = createSlice({
@@ -31,11 +35,20 @@ const productsSlice = createSlice({
             state.total = action.payload.total;
         },
         setProductDetail: (state, action) => {
-            state.selectedProduct = action.payload
+            state.selectedProduct = action.payload;
+        },
+        setCategories: (state, action) => {
+            state.categories = action.payload;
+        },
+        setSelectedCategory: (state, action) => {
+            state.selectedCategory = action.payload;
+        },
+        updateSearchKey: (state, action) => {
+            state.searchKey = action.payload;
         }
     }
 });
 
-export const { setProducts, setProductDetail } = productsSlice.actions;
+export const { setProducts, setProductDetail, setCategories, setSelectedCategory, updateSearchKey } = productsSlice.actions;
 
 export default productsSlice.reducer;

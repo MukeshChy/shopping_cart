@@ -142,8 +142,7 @@ const Cart = (): any => {
         <>
             <Grid
                 container
-                padding={'2rem'}
-                marginTop={'4rem'}>
+                padding={'2rem'}>
                 <Grid
                     item
                     xs={8}>

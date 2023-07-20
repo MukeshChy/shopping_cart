@@ -74,77 +74,79 @@ const ProductDetails = (): any => {
         navigate('/cart');
     }
 
-    return ( product &&
-    <Container maxWidth="xl">
-        <Grid
-            container
-            spacing={2}
-            className='shadow'
-            padding={'0.5rem'}
-            marginTop={'6rem'}>
+    return <>
+            {product &&
+            <Container maxWidth="xl">
             <Grid
-                item
-                xs={5}
-                display={'flex'}
-                flexDirection={'column'}
-                style={{padding: '0px'}}>
-                    <Avatar
-                        src={product.thumbnail}
-                        variant="square"
-                        sx={{ width: 'auto', height: 500 }} />
-                    
-                    <div
-                        className='carousel'>
-                        {
-                            product.images.map((image: any) => 
-                                <Avatar
-                                    variant="square"
-                                    key={image}
-                                    src={image}
-                                    className='carousel-item'
-                                    sx={{ width: 100, height: 100 }}
-                                    onClick={(() => swapHandler(image))} />
-                            )
-                        }
-                    </div>
+                container
+                spacing={2}
+                className='shadow'
+                padding={'0.5rem'}
+                marginTop={'6rem'}>
+                <Grid
+                    item
+                    xs={5}
+                    display={'flex'}
+                    flexDirection={'column'}
+                    style={{padding: '0px'}}>
+                        <Avatar
+                            src={product.thumbnail}
+                            variant="square"
+                            sx={{ width: 'auto', height: 500 }} />
+                        
+                        <div
+                            className='carousel'>
+                            {
+                                product.images.map((image: any) => 
+                                    <Avatar
+                                        variant="square"
+                                        key={image}
+                                        src={image}
+                                        className='carousel-item'
+                                        sx={{ width: 100, height: 100 }}
+                                        onClick={(() => swapHandler(image))} />
+                                )
+                            }
+                        </div>
 
+                </Grid>
+                <Grid
+                    item xs={6}
+                    display={'flex'}
+                    flexDirection={'column'}>
+                        <Typography variant="h4">
+                            {product.title}
+                            {product.stock > 0 && <Chip variant="outlined" color="info" label="IN STOCK" style={{margin: 'auto 2rem'}} />}
+                        </Typography>
+                        <Rating name="read-only" value={product.rating} readOnly />
+                        <Typography variant="h3" my={2}>${product.price}</Typography>
+                        <Typography variant="body1" my={2}>
+                            {product.description}
+                        </Typography>
+                        <div
+                            style={{
+                                display: 'flex'
+                            }}>
+                            <TextField
+                                id="qty"
+                                label="QTY"
+                                variant="outlined"
+                                type="number"
+                                value={currentCartItem.qty}
+                                onChange={qtyChangeHandler}/>
+                        </div>
+                        <Stack direction="row" spacing={2} my={2}>
+                            <Button variant="outlined" size="large" startIcon={<FavoriteIcon />}>
+                                WISHLIST
+                            </Button>
+                            <Button variant="contained" size="large" endIcon={<AddShoppingCartIcon />} onClick={addToCartHandler}>
+                                ADD TO CART
+                            </Button>
+                        </Stack>
+                </Grid>
             </Grid>
-            <Grid
-                item xs={6}
-                display={'flex'}
-                flexDirection={'column'}>
-                    <Typography variant="h4">
-                        {product.title}
-                        {product.stock > 0 && <Chip variant="outlined" color="info" label="IN STOCK" style={{margin: 'auto 2rem'}} />}
-                    </Typography>
-                    <Rating name="read-only" value={product.rating} readOnly />
-                    <Typography variant="h3" my={2}>${product.price}</Typography>
-                    <Typography variant="body1" my={2}>
-                        {product.description}
-                    </Typography>
-                    <div
-                        style={{
-                            display: 'flex'
-                        }}>
-                        <TextField
-                            id="qty"
-                            label="QTY"
-                            variant="outlined"
-                            type="number"
-                            value={currentCartItem.qty}
-                            onChange={qtyChangeHandler}/>
-                    </div>
-                    <Stack direction="row" spacing={2} my={2}>
-                        <Button variant="outlined" size="large" startIcon={<FavoriteIcon />}>
-                            WISHLIST
-                        </Button>
-                        <Button variant="contained" size="large" endIcon={<AddShoppingCartIcon />} onClick={addToCartHandler}>
-                            ADD TO CART
-                        </Button>
-                    </Stack>
-            </Grid>
-        </Grid>
-    </Container>);
+            </Container>}
+        </>
 
 };
 

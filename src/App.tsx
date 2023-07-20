@@ -1,24 +1,21 @@
-import { Provider } from 'react-redux';
-
 import './App.css';
 import Products from './features/products/Products';
-import store from './shared/store/store';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import ProductDetails from './features/products/product-details/ProductDetails';
 import Cart from './features/cart/Cart';
+import Header from './features/header/Header';
 
 function App() {
 
-  const router = createBrowserRouter([
-    { path: '', element: <Products /> },
-    { path: '/products/:productId', element: <ProductDetails /> },
-    { path: '/cart', element: <Cart /> },
-    { path: '/checkout', element: <Cart /> }
-  ]);
-
-  return (
-    <Provider store={store}> <RouterProvider router={router}></RouterProvider>
-    </Provider>
+  return ( <>
+      <Header />
+      <Routes> 
+          <Route path="/" element={<Products/>} />
+          <Route path="/products/:productId" element={<ProductDetails/>} />
+          <Route path="/cart" element={<Cart/>}/>
+          <Route path="/checkout" element={<Cart/>}/>
+        </Routes>
+      </>
   );
 }
 
