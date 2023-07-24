@@ -5,7 +5,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Badge from '@mui/material/Badge';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
-import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -39,7 +38,7 @@ const Header = (props: any) => {
     }
 
     useEffect(() => {
-        const t = setTimeout(() => {
+        const timerId = setTimeout(() => {
             localStorage.setItem('pageNo', '1');
             localStorage.setItem('searchKey', searchKey);
             dispatch(updateSearchKey(searchKey));
@@ -47,7 +46,7 @@ const Header = (props: any) => {
         }, 400);
 
         return(() => {
-            clearTimeout(t);
+            clearTimeout(timerId);
         })
     }, [searchKey]);
 
